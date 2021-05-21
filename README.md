@@ -162,3 +162,11 @@ These values are returned to client in json format.
     "total_users": 4
 }
 ```
+
+## 4. Technology Preferences
+
+For the app to function under high traffic, Pub/Sub mechanism is preferred for writing logs to BigQuery table. As stated in [documentation of Pub/Sub](https://cloud.google.com/pubsub/docs/overview), Pub/Sub offers durable message storage and real-time message delivery with high availability and consistent performance at scale. Google Cloud's Pub/Sub Service also offers auto-scaling, which can be useful for reducing costs at low traffic and performing well at high traffic. Since it is asynchronous, a request can be processed by one or more workers.
+
+Google's another service, [DataFlow](https://cloud.google.com/dataflow) is used to create BigQuery table entries from topic message content. It's main advantages are streaming data with speed(low latency) and autoscaling of resources and dynamic work rebalancing, which are pretty useful for this case, since this service is expected to perform under high traffic and huge chunks of data.
+
+Another optimization used for this case is creating `date` field in BigQuery table, which is used for [partitioning](https://cloud.google.com/bigquery/docs/partitioned-tables). Partitioned tables can be queried using filters based on the partitioning column that reduce the amount of data to scan, which can control costs and improve query performance. This speeds up the process for queries made for the date field.
