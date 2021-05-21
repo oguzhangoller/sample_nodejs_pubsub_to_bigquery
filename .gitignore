@@ -1,0 +1,16 @@
+/node_modules
+npm-debug.log
+.DS_Store
+/*.env
+.expo/*
+npm-debug.*
+.idea*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+
+
